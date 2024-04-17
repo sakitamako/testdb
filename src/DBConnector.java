@@ -18,7 +18,7 @@ public class DBConnector {
 	private static String user = "root";
 	
 	//mysqlにログインするための値の準備をしている
-	private static String password = "mysql";
+	private static String password = "root";
 	
 	//接続状態にする
 	public Connection getConnection() {
