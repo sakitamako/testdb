@@ -8,7 +8,42 @@ public class TestUserDAO {
 	//String=文字列
 	String name = "";
 	String password = "";
-
+	
+	//voidは戻り値がないメソッドで指定する特別な型
+	public void select(String name, String password) {
+		DBConnector db = new DBConnector();
+		Connection con = db.getConnection();
+	
+		String sql ="select * from test_table where user_name=? and password=?";
+	
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setString(1, name);
+			ps.setString(2, password);
+			
+			ResultSet rs = ps.executeQuery();
+		
+			if (rs.next()) {
+				System.out.println(rs.getString("user_name"));
+				System.out.println(rs.getString("password"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		try {
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	//voidは戻り値がないメソッドで指定する特別な型
 	public void selectAll() {
 
@@ -30,11 +65,12 @@ public class TestUserDAO {
 			//executeQuery();は実行メソッド、必ずResultSetが返ってくる
 			ResultSet rs = ps.executeQuery();
 			
-			//while(rs.next())はカーソルを1行ずつ実行していきデータがなくなったら実行を終了するという意味
+			//while(rs.next())はカーソルを1行ずつ実行していきデータがなくなったら実行を終了する
 			while (rs.next()) {
 				System.out.println(rs.getString("user_name"));
 				System.out.println(rs.getString("password"));
-				}
+				
+			}
 
 			/*tryの中でエラーが発生した場合、catchが受け取り
 			 printStackTraceでエラーに至る履歴を表示してくれる*/
@@ -53,10 +89,74 @@ public class TestUserDAO {
 			/*tryの中でエラーが発生した場合、catchが受け取り
 			 printStackTraceでエラーに至る履歴を表示してくれる*/
 			//SQLException（クラスが見つからない場合の例外）
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+	
+	}
+	
+	public void selectByName(String name) {
+		DBConnector db = new DBConnector();
+		Connection con = db.getConnection();
+		
+		String sql ="select * from test_table where user_name=?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, name);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				System.out.println(rs.getString("user_name"));
+				System.out.println(rs.getString("password"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		
+		try {
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+	}
+	
+	public void selectByPassword(String password) {
+		DBConnector db = new DBConnector();
+		Connection con = db.getConnection();
+		
+		String sql ="select * from test_table where password=?";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString (1, password);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				System.out.println(rs.getString("user_name"));
+				System.out.println(rs.getString("password"));
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
+		try {
+			con.close() ;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
 	}
-
+	
 }
+	
