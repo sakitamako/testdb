@@ -12,9 +12,16 @@ public class Test {
 		TestUserDAO dao = new TestUserDAO();
 		
 		//メソッドを実行
+		//4
 		dao.select("taro", "123");
+		//6
 		dao.selectAll();
+		//8
 		dao.selectByName("taro");
+		//10
+		dao.selectByPassword("123");
+		//12
+		dao.updateUserNameByUserName("taro", "saburo");
 	}
 
 }
