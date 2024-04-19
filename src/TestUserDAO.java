@@ -256,4 +256,52 @@ public class TestUserDAO {
 			
 		}
 		
+		//13
+		//voidは戻り値がないメソッドで指定する特別な型
+		public void insert(int user_id, String name, String password) {
+			
+			//DBへの接続準備、DBと会話するためのコード、これでログインできる
+			DBConnector db = new DBConnector();
+			Connection con = db.getConnection();
+			
+			//test_tableに入っているデータuser_id user_name=? password=?に入る3つの条件を満たしたデータがsqlに代入される
+			String sql = "insert into test_table values(?, ?, ?,)";
+			
+			//tryの中でエラーが発生した場合に、catchが受け取り、printStackTraceでエラーに至る履歴を表示してくれる
+			try {
+				
+				//PreparedStatementとは DB まで運んでくれる箱
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, user_id);
+				ps.setString(2, name);
+				ps.setString(3, password);
+				
+				//executeUpdate()はデータの件数(数値）を返している
+				int i = ps.executeUpdate();
+				
+				//もしiが0より大きい場合、i件更新されましたと表示する
+				if (i > 0) {
+					System.out.println(i + "件登録されました");
+				}
+			
+			//catchが受け取り、printStackTraceでエラーに至る履歴を表示してくれる
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			//tryの中でエラーが発生した場合に、catchが受け取り、printStackTraceでエラーに至る履歴を表示してくれる
+			try {
+				
+				//データベースとの接続をクローズ
+				//これをしないとデータベースを接続したまま作業が実行されてしまってメモリに負荷がかかる
+				con.close();
+				
+			//catchが受け取り、printStackTraceでエラーに至る履歴を表示してくれる
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		
 }

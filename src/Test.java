@@ -22,6 +22,8 @@ public class Test {
 		dao.selectByPassword("123");
 		//12
 		dao.updateUserNameByUserName("taro", "saburo");
+		//14
+		dao.insert(4, "shiro", "012");
 	}
 
 }
